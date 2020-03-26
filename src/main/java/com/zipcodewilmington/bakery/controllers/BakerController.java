@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class BakerController {
@@ -18,25 +18,25 @@ public class BakerController {
         this.service = service;
     }
 
-
+    @RequestMapping(value = "/bakers/index", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Baker>> index() {
         return new ResponseEntity<>(service.index(), HttpStatus.OK);
     }
 
-
-    public ResponseEntity<Baker> show(Long id) {
+    @RequestMapping(value = "/bakers/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Baker> show(@PathVariable Long id) {
         return new ResponseEntity<>(service.show(id), HttpStatus.OK);
     }
 
-
-    public ResponseEntity<Baker> create(Baker baker) {
+    @RequestMapping(value = "/bakers", method = RequestMethod.POST)
+    public ResponseEntity<Baker> create(@RequestBody Baker baker) {
         return new ResponseEntity<>(service.create(baker), HttpStatus.CREATED);
     }
-
+    @RequestMapping(value = "/bakers/update", method = RequestMethod.POST)
     public ResponseEntity<Baker> update(Long id, Baker baker) {
         return new ResponseEntity<>(service.update(id, baker), HttpStatus.OK);
     }
-
+    @RequestMapping(value = "/bakers/delete", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> destroy(Long id) {
         return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
     }
